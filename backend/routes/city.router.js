@@ -6,7 +6,7 @@ const UsercitiesModel = require('../model/usercities.model')
 const cityrouter = express.Router()
 
 cityrouter.get("/", async (req, res) => {
-    const city = req.query.city || req.preferredcity
+    const city = req.query.city 
     const cachedata = await redis.get(city+req.userID)
     if (cachedata) {
         console.log("from redis")

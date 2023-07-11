@@ -43,7 +43,7 @@ export default function SignupCard() {
         setpassword("")
         setpreffered_city("")
         toast.success("Registration Succesful")
-        // navigate("/login")
+        navigate("/login")
         console.log(data);
 
       })

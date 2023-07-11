@@ -32,7 +32,7 @@ userrouter.post("/login", async (req, res) => {
         bcrypt.compare(password, user.password, (err, result) => {
             if (result) {
                 const token = jwt.sign({ userID: user._id, preferredcity: user.preferredcity }, process.env.secretkey, { expiresIn: "1h" })
-                res.send({ msg: "login succesful", token })
+                res.send({ msg: "login succesful", token ,user})
             } else {
                 return res.send({ msg: "invalid credintials" })
             }
