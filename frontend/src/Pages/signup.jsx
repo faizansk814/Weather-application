@@ -38,17 +38,22 @@ export default function SignupCard() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setname("")
-        setemail("")
-        setpassword("")
-        setpreffered_city("")
-        toast.success("Registration Succesful")
-        navigate("/login")
-        console.log(data);
+        if (data.msg == "User already present login") {
+          toast.error(data.msg)
+        } else {
+          setname("")
+          setemail("")
+          setpassword("")
+          setpreffered_city("")
+          toast.success("Registration Succesful")
+          navigate("/login")
+          console.log(data);
+        }
+
 
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err)
       })
   }
 

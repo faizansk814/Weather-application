@@ -29,21 +29,26 @@ export default function SimpleCard() {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data.msg == "No user found") {
+          toast.error(data.msg)
+        } else if (data.msg == "invalid credintials") {
+          toast.error(data.msg)
+        } else {
           console.log(data);
-          localStorage.setItem("token",data.token)
-          localStorage.setItem("user",JSON.stringify(data.user))
+          localStorage.setItem("token", data.token)
+          localStorage.setItem("user", JSON.stringify(data.user))
           setemail("")
           setpassword("")
-
           toast.success(`${data.msg}`)
           setTimeout(() => {
             navigate("/")
           }, 5000);
-       
+        }
+
 
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err)
       })
   }
 

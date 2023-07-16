@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 // import { useState } from 'react';
-
+import Swal from 'sweetalert2';
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   // const [toggle, settoggle] = useState(false)
@@ -34,7 +34,16 @@ export default function WithSubnavigation() {
   let user = JSON.parse(localStorage.getItem("user")) || []
   console.log(token);
   console.log(user);
-
+  function Handletoken(){
+    if(!token){
+      Swal.fire(
+        'Good job!',
+        'You clicked the button!',
+        'success'
+      )
+    }
+    return
+  }
   function HandleLogout() {
     localStorage.clear()
     navigate("/")

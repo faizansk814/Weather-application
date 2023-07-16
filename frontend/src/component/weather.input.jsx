@@ -14,26 +14,52 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 export default function InputBox() {
     const [inputval, setinputval] = useState("")
+    const [icon, seticon] = useState("")
+    const [temp, settemp] = useState("")
+    const [city, setcity] = useState("")
+    const [humidity, sethumidity] = useState("")
+    const [farha, setfarha] = useState("")
+    const [region, setregion] = useState("")
+    const [desc, setdesc] = useState("")
+    let boxele = document.getElementById('aa')
+    const token = localStorage.getItem("token")
     function Handlesubmit() {
-        fetch(`http://localhost:4031/city?city=${inputval}`)
-            .then((res) => {
-                return res.json()
-            })
-            .then((data) => {
-                console.log(data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        if (token) {
+            fetch(`http://localhost:4031/city?city=${inputval}`)
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+                    console.log(data)
+                    seticon(data.current.condition.icon)
+                    settemp(data.current.temp_c)
+                    setcity(data.location.name)
+                    sethumidity(data.current.humidity)
+                    setfarha(data.current.temp_f)
+                    setregion(data.location.region)
+                    setdesc(data.current.condition.text)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            boxele.style.display = "block"
+        } else {
+            Swal.fire(
+                'You need to login',
+                'Login first!',
+                'error'
+            )
+        }
     }
     return (
         <Flex
             flexDirection={'column'}
             minH={'100vh'}
-            align={'center'} // Updated align property
-            justify={'center'} // Updated justify property
+            align={'center'}
+            justify={'center'}
             bg={useColorModeValue('gray.50', 'gray.800')}
         >
             <Stack
@@ -74,6 +100,8 @@ export default function InputBox() {
             </Stack>
             <Center py={6}>
                 <Box
+                    id="aa"
+                    display={'none'}
                     maxW={'320px'}
                     w={'full'}
                     bg={useColorModeValue('white', 'gray.900')}
@@ -83,93 +111,28 @@ export default function InputBox() {
                     textAlign={'center'}>
                     <Avatar
                         size={'xl'}
-                        src={
-                            'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
-                        }
+                        src={icon}
                         alt={'Avatar Alt'}
                         mb={4}
                         pos={'relative'}
-                        _after={{
-                            content: '""',
-                            w: 4,
-                            h: 4,
-                            bg: 'green.300',
-                            border: '2px solid white',
-                            rounded: 'full',
-                            pos: 'absolute',
-                            bottom: 0,
-                            right: 3,
-                        }}
                     />
                     <Heading fontSize={'2xl'} fontFamily={'body'}>
-                        Lindsey James
+                        {`${city}  ${temp}°`}
                     </Heading>
-                    <Text fontWeight={600} color={'gray.500'} mb={4}>
-                        @lindsey_jam3s
+                    <Text >
+                        {`${desc}`}
                     </Text>
-                    <Text
-                        textAlign={'center'}
-                        color={useColorModeValue('gray.700', 'gray.400')}
-                        px={3}>
-                        Actress, musician, songwriter and artist. PM for work inquires or{' '}
-                        <Link href={'#'} color={'blue.400'}>
-                            #tag
-                        </Link>{' '}
-                        me in your posts
+                    <Text fontWeight={'bold'}>
+                        {`Humidity:- ${humidity}`}
+                    </Text>
+                    <Text fontWeight={'bold'}>
+                        {`Farhaniet:- ${farha}`}
+                    </Text>
+                    <Text fontWeight={'bold'}>
+                        {`Region:- ${region}`}
                     </Text>
 
-                    <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
-                        <Badge
-                            px={2}
-                            py={1}
-                            bg={useColorModeValue('gray.50', 'gray.800')}
-                            fontWeight={'400'}>
-                            #art
-                        </Badge>
-                        <Badge
-                            px={2}
-                            py={1}
-                            bg={useColorModeValue('gray.50', 'gray.800')}
-                            fontWeight={'400'}>
-                            #photography
-                        </Badge>
-                        <Badge
-                            px={2}
-                            py={1}
-                            bg={useColorModeValue('gray.50', 'gray.800')}
-                            fontWeight={'400'}>
-                            #music
-                        </Badge>
-                    </Stack>
 
-                    <Stack mt={8} direction={'row'} spacing={4}>
-                        <Button
-                            flex={1}
-                            fontSize={'sm'}
-                            rounded={'full'}
-                            _focus={{
-                                bg: 'gray.200',
-                            }}>
-                            Message
-                        </Button>
-                        <Button
-                            flex={1}
-                            fontSize={'sm'}
-                            rounded={'full'}
-                            bg={'blue.400'}
-                            color={'white'}
-                            boxShadow={
-                                '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-                            }
-                            _hover={{
-                                bg: 'blue.500',
-                            }}
-                            _focus={{
-                                bg: 'blue.500',
-                            }}>
-                            Follow
-                        </Button>
-                    </Stack>
                 </Box>
             </Center>
         </Flex>
