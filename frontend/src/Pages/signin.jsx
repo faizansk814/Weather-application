@@ -20,7 +20,7 @@ export default function SimpleCard() {
   let navigate = useNavigate()
 
   function handleSubmit() {
-    fetch(`http://localhost:4031/user/login`, {
+    fetch(`https://weather-application-deploy.onrender.com/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

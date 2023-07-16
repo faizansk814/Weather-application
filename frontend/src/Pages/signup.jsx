@@ -29,7 +29,7 @@ export default function SignupCard() {
   const navigate = useNavigate()
 
   function handleSubmit() {
-    fetch(`http://localhost:4031/user/register`, {
+    fetch(`https://weather-application-deploy.onrender.com/user/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

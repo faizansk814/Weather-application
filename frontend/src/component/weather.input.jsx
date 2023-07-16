@@ -9,8 +9,6 @@ import {
     Center,
     Text,
     Stack,
-    Link,
-    Badge,
     useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -28,7 +26,7 @@ export default function InputBox() {
     const token = localStorage.getItem("token")
     function Handlesubmit() {
         if (token) {
-            fetch(`http://localhost:4031/city?city=${inputval}`)
+            fetch(`https://weather-application-deploy.onrender.com/city?city=${inputval}`)
                 .then((res) => {
                     return res.json()
                 })
